@@ -22,7 +22,7 @@ class ElementAttribute {
 
 class Component { //base component
   //use for replacing the line const xx = document.createElement('xx'); after render()
-  constructor(renderHookId, shouldRender = true) {
+  constructor(renderHookId, shouldRender = true) { //The id of this instance is set to the first argument, and if nothing or true is passed as a second argument, the render method is called.
     this.hookId = renderHookId;
     if(shouldRender) {
       this.render();
@@ -66,12 +66,12 @@ class ShoppingCart extends Component {
   }
 
   constructor(renderHookId) { //call the constructor from parent class
-    super(renderHookId, false);
+    super(renderHookId, false); //not render yet
     this.orderProducts = () => {
       console.log('Ordering...');
       console.log(this.items);
     };
-    this.render();
+    this.render(); //render after orderProducts is called
   }
 
   addProduct(product) {
@@ -87,7 +87,6 @@ class ShoppingCart extends Component {
       <button>Order Now!</button>
     `;
     const orderButton = cartEl.querySelector('button');
-    // orderButton.addEventListener('click', () => this.orderProducts());
     orderButton.addEventListener('click', this.orderProducts);
     this.totalOutput = cartEl.querySelector('h2');  }
 }
@@ -123,10 +122,10 @@ class ProductItem extends Component {
 
 class ProductList extends Component {
   products = [];
-  
+
   constructor(renderHookId) {
-    super(renderHookId);
-    this.fetchProducts();
+    super(renderHookId); //call parent constructor
+    this.fetchProducts(); //create html & display data 
   }
 
   fetchProducts() {
@@ -150,13 +149,12 @@ class ProductList extends Component {
         "This Simple Frosted TPU Pencil Case is designed by Kawaii Stationery Shop."
       )
     ];
-    this.renderProducts();
+    this.renderProducts(); //create html & display data
   }
-
 
   renderProducts() {
     for (const prod of this.products) {
-      new ProductItem(prod, 'prod-list');
+      new ProductItem(prod, 'prod-list'); //create html for each data
     }
   }
 
